@@ -94,4 +94,3 @@ outputs:
     description: Endeca application endpoint
     value:
       ip_address: { get_property: [ host, ip ] }
-      port: { get_property: [endeca, port] }
