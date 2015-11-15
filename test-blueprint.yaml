@@ -1,0 +1,97 @@
+tosca_definitions_version: cloudify_dsl_1_0
+
+imports:
+  - types/endeca.yaml
+  - http://www.getcloudify.org/spec/cloudify/3.2/types.yaml
+  - http://www.getcloudify.org/spec/diamond-plugin/1.2/plugin.yaml
+
+inputs:
+
+  host_ip:
+      description: >
+        The ip of the host the application will be deployed on
+  agent_user:
+      description: >
+        User name used when SSH-ing into the started machine
+  agent_private_key_path:
+      description: >
+        Path to a private key that resided on the management machine.
+        SSH-ing into agent machines will be done with this key.
+node_templates:
+
+  host:
+    type: cloudify.nodes.Compute
+    properties:
+      ip: { get_input: host_ip }
+      cloudify_agent:
+        user: { get_input: agent_user }
+        key: { get_input: agent_private_key_path }
+    interfaces:
+      cloudify.interfaces.monitoring_agent:
+          install:
+            implementation: diamond.diamond_agent.tasks.install
+            inputs:
+              diamond_config:
+                interval: 1
+          start: diamond.diamond_agent.tasks.start
+          stop: diamond.diamond_agent.tasks.stop
+          uninstall: diamond.diamond_agent.tasks.uninstall
+      cloudify.interfaces.monitoring:
+          start:
+            implementation: diamond.diamond_agent.tasks.add_collectors
+            inputs:
+              collectors_config:
+                CPUCollector: {}
+                MemoryCollector: {}
+                LoadAverageCollector: {}
+                DiskUsageCollector:
+                  config:
+                    devices: x?vd[a-z]+[0-9]*$
+                NetworkCollector: {}
+
+  mdex:
+    type: atlas.nodes.endeca.mdex
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        configure: scripts/endeca/install-mdex.sh
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: host
+  ps:
+    type: atlas.nodes.endeca.mdex
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        configure: scripts/endeca/install-ps.sh
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: host
+  taf:
+    type: atlas.nodes.endeca.mdex
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        configure: scripts/endeca/install-taf.sh
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: host
+  cas:
+    type: atlas.nodes.endeca.mdex
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        configure: scripts/endeca/install-cas.sh
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: host
+
+
+###########################################################
+# This outputs section exposes the application endpoint.
+# You can access it by running:
+#   - cfy deployments -d <deployment_id> outputs
+###########################################################
+
+outputs:
+  endpoint:
+    description: Endeca application endpoint
+    value:
+      ip_address: { get_property: [ host, ip ] }
+      port: { get_property: [endeca, port] }

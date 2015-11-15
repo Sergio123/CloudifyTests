@@ -1,0 +1,1 @@
+ctx logger info "Successfully started MDEX"

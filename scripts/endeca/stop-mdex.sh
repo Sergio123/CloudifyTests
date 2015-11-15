@@ -1,0 +1,1 @@
+ctx logger info "Successfully stopped MDEX"
