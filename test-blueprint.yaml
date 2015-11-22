@@ -49,6 +49,7 @@ node_templates:
                     devices: x?vd[a-z]+[0-9]*$
                 NetworkCollector: {}
 
+				
   mdex:
     type: atlas.nodes.endeca.mdex
     interfaces:

@@ -2,27 +2,14 @@ node_types:
 
   atlas.nodes.endeca.mdex:
     derived_from: cloudify.nodes.ApplicationModule
-    interfaces:
-      cloudify.interfaces.lifecycle:
-        create: scripts/endeca/install-mdex.sh
-        start: scripts/endeca/start-mdex.sh
-        stop: scripts/endeca/stop-mdex.sh
 
   atlas.nodes.endeca.ps:
     derived_from: cloudify.nodes.ApplicationModule
-    interfaces:
-      cloudify.interfaces.lifecycle:
-        create: scripts/endeca/install-ps.sh
 
   atlas.nodes.endeca.taf:
     derived_from: cloudify.nodes.ApplicationModule
-    interfaces:
-      cloudify.interfaces.lifecycle:
-        configure: scripts/endeca/install-taf.sh
   
   atlas.nodes.endeca.cas:
     derived_from: cloudify.nodes.ApplicationModule
-    interfaces:
-      cloudify.interfaces.lifecycle:
-        configure: scripts/endeca/install-cas.sh        
+       
 
