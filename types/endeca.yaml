@@ -2,6 +2,23 @@ node_types:
 
   atlas.nodes.endeca.mdex:
     derived_from: cloudify.nodes.ApplicationModule
+    properties:
+      ftp:
+        url:
+          description: >
+            FTP url
+          default:
+            ftp://192.168.0.101/Oracle/EndecaDeveloper/v46002-01.zip
+        user:
+          description: >
+            User for ftp
+          default:
+            test
+        password:
+          description: >
+            Password for ftp
+          default:
+            test
 
   atlas.nodes.endeca.ps:
     derived_from: cloudify.nodes.ApplicationModule
@@ -12,4 +29,3 @@ node_types:
   atlas.nodes.endeca.cas:
     derived_from: cloudify.nodes.ApplicationModule
        
-
