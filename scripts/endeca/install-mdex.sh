@@ -11,7 +11,6 @@ function untar() {
 	ctx logger info "untar"
 }
 
-
 TEMP_DIR='/tmp'
 FTP_URL= $(ctx node properties ftp url)
 FTP_USER= $(ctx node properties ftp user)
