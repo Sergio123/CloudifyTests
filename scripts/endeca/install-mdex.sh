@@ -28,7 +28,7 @@ function download() {
 }
 
 function untar() {
-
+    ctx logger info "untar"
 }
 
 TEMP_DIR='/tmp'
