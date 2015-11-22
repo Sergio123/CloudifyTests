@@ -12,8 +12,8 @@ function untar() {
 }
 
 TEMP_DIR='/tmp'
-FTP_URL= $(ctx node properties ftp url)
-FTP_USER= $(ctx node properties ftp user)
-FTP_PASSWORD= $(ctx node properties ftp password)
+FTP_URL= $(ctx node properties url)
+FTP_USER= $(ctx node properties user)
+FTP_PASSWORD= $(ctx node properties password)
 download ${FTP_URL} ${FTP_USER} ${FTP_PASSWORD}
 ctx logger info "Successfully installed mdex"
