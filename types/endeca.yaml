@@ -8,7 +8,7 @@ node_types:
           FTP url
         type: string
         default:
-          192.168.0.101/Oracle/EndecaDeveloper/v46002-01.zip
+          ftp://192.168.0.101/Oracle/EndecaDeveloper/v46002-01.zip
       user:
         description: >
           User for ftp

@@ -12,7 +12,8 @@ function untar() {
 }
 
 TEMP_DIR='/tmp'
-FTP_URL= $(ctx node properties url)
+#FTP_URL= $(ctx node properties url)
+FTP_URL= 'test_url'
 FTP_USER= $(ctx node properties user)
 FTP_PASSWORD= $(ctx node properties password)
 download ${FTP_URL} ${FTP_USER} ${FTP_PASSWORD}
